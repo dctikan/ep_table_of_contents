@@ -2,6 +2,8 @@ $('#tocButton').click(function(){
   $('#toc').toggle();
 });
 
+var last_update_sp=new Date();
+var last_update_toc=new Date();
 var tableOfContents = {
 
   enable: function(){
@@ -79,7 +81,6 @@ var tableOfContents = {
   },
 
   // show the current position
-  var last_update_sp=new Date();
   showPosition: function(rep){
 	if((new Date()).getTime()-last_update_sp.getTime()>3000){
 		last_update_sp=new Date();
@@ -109,7 +110,6 @@ var tableOfContents = {
 	}
   },
 
-  var last_update_toc=new Date();
   update: function(rep){
 	if((new Date()).getTime()-last_update_toc.getTime()>3000){
 		last_update_toc=new Date();
