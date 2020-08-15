@@ -2,8 +2,8 @@ $('#tocButton').click(function(){
   $('#toc').toggle();
 });
 
-var last_update_sp=new Date();
-var last_update_toc=new Date();
+var last_update_sp=null;
+var last_update_toc=null;
 var tableOfContents = {
 
   enable: function(){
@@ -82,7 +82,7 @@ var tableOfContents = {
 
   // show the current position
   showPosition: function(rep){
-	if((new Date()).getTime()-last_update_sp.getTime()>3000){
+	if(last_update_sp===null || (new Date()).getTime()-last_update_sp.getTime()>3000){
 		last_update_sp=new Date();
     	// We need to know current line # -- see rep
     	// And we need to know what section is before this line number
@@ -111,7 +111,7 @@ var tableOfContents = {
   },
 
   update: function(rep){
-	if((new Date()).getTime()-last_update_toc.getTime()>3000){
+	if(last_update_toc===null || (new Date()).getTime()-last_update_toc.getTime()>3000){
 		last_update_toc=new Date();
     	if(rep){
     	  tableOfContents.showPosition(rep);
