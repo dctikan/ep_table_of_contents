@@ -79,37 +79,45 @@ var tableOfContents = {
   },
 
   // show the current position
+  var last_update_sp=new Date();
   showPosition: function(rep){
-    // We need to know current line # -- see rep
-    // And we need to know what section is before this line number
-    var toc = clientVars.plugins.plugins.ep_table_of_context;
-    if(!toc) return false;
-    var repLineNumber = rep.selEnd[0]; // line Number
+	if((new Date()).getTime()-last_update_sp.getTime()>3000){
+		last_update_sp=new Date();
+    	// We need to know current line # -- see rep
+    	// And we need to know what section is before this line number
+    	var toc = clientVars.plugins.plugins.ep_table_of_context;
+    	if(!toc) return false;
+    	var repLineNumber = rep.selEnd[0]; // line Number
 
-    // So given a line number of 10 and a toc of [4,8,12] we want to find 8..
-    $.each(toc, function(k, line){
-      if(repLineNumber >= line.lineNumber){
-        // we might be showing this..
-        var nextLine = toc[k];
-        if(nextLine.lineNumber <= repLineNumber){
-          var activeToc = parseInt(k)+1;
+    	// So given a line number of 10 and a toc of [4,8,12] we want to find 8..
+    	$.each(toc, function(k, line){
+    	  if(repLineNumber >= line.lineNumber){
+    	    // we might be showing this..
+    	    var nextLine = toc[k];
+    	    if(nextLine.lineNumber <= repLineNumber){
+    	      var activeToc = parseInt(k)+1;
 
-          // Seems expensive, we go through each item and remove class
-          $('.tocItem').each(function(){
-            $(this).removeClass("activeTOC");
-          });
+    	      // Seems expensive, we go through each item and remove class
+    	      $('.tocItem').each(function(){
+    	        $(this).removeClass("activeTOC");
+    	      });
 
-          $('.toch'+activeToc).addClass("activeTOC");
-        }
-      }
-    });
+    	      $('.toch'+activeToc).addClass("activeTOC");
+    	    }
+    	  }
+    	});
+	}
   },
 
+  var last_update_toc=new Date();
   update: function(rep){
-    if(rep){
-      tableOfContents.showPosition(rep);
-    }
-    tableOfContents.getPadHTML(rep);
+	if((new Date()).getTime()-last_update_toc.getTime()>3000){
+		last_update_toc=new Date();
+    	if(rep){
+    	  tableOfContents.showPosition(rep);
+    	}
+    	tableOfContents.getPadHTML(rep);
+	}
   },
 
   scroll: function(newY){
